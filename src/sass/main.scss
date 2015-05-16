@@ -1,0 +1,185 @@
+@import "modules/bourbon/bourbon";
+@import "variables";
+
+$boardWidth: 600px;
+$boardSize: 15;
+$boardElementWidth: 3px;
+
+$side: -180%;
+$edge: -130%;
+
+$main-c: #B81365;
+$main-size: 100px;
+$plate-size: 50px;
+
+@function c($mn, $mx) {
+  @return max($mn, random($mx));
+}
+
+@function rngrbga($min: 0, $max: 255, $alpha: 1) {
+  @return #{rgba(c($min, $max), c($min, $max), c($min, $max), random($alpha * 10) / 10)};
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  background-color: $FlatMidnightBlue;
+}
+
+section{
+}
+
+.board{
+  @include position(absolute, 0 0 0 0);
+  margin: auto;
+  width: $boardWidth;
+  height: $boardWidth;
+}
+
+.boardRow{
+  width: 100%;
+  height: 100% / $boardSize;
+  border-bottom: 1px solid $FlatMidnightBlue;
+  box-sizing: border-box;
+}
+
+.boardCol{
+  $columnWidth : 100%;
+  width: $columnWidth / $boardSize;
+  height: 100%;
+  background-color: $FlatWetAsphalt;
+  float: left;
+  border-radius: 3px;
+  border-left: 1px solid $FlatMidnightBlue;
+  box-sizing: border-box;
+}
+
+.boardCellCross{
+  $cellWidth : 70% * 1.41;
+  margin: auto;
+  margin-top: (100% - $cellWidth) / 2;
+  width: $boardElementWidth;
+  height: $cellWidth;
+  background-color: $FlatEmerald;
+  transform: rotate(-45deg);
+  border-radius: $boardElementWidth / 2;
+  &:before{
+    background-color: inherit;
+    border-radius: inherit;
+    height: inherit;
+    width: inherit;
+    position: absolute;
+    content: "";
+    transform: rotate(90deg);
+  }
+}
+
+.boardCellCircle{
+  $cellWidth : 70%;
+  margin: (100% - $cellWidth) / 2;
+  width: $cellWidth;
+  height: $cellWidth;
+  border: $boardElementWidth solid $FlatAlizarin;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+
+
+
+#check {
+  display: none;
+}
+
+.main,
+.container {
+  @include position(absolute, 200px 0 0 50px);
+  width: $main-size;
+  height: $main-size;
+  border-radius: 50%;
+}
+
+.main {
+  background-color: $main-c;
+  box-shadow:  1px 2px 2px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  z-index: 50;
+
+  &:hover {
+    background-color: lighten($main-c, 5%);
+  }
+  &:active {
+    box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.35), inset 1px 2px 2px rgba(0, 0, 0, 0.35);
+    background-color: darken($main-c, 5%);
+  }
+
+  .title {
+    font-size: 20px;
+    text-align: center;
+    color: white;
+  }
+}
+.container {
+  z-index: 10;
+}
+
+.plate {
+  //margin: auto;
+ // @include position(absolute, 50px 0 0 50px);
+  position: absolute;
+  top : 25px;
+  left: 25px;
+  width: $plate-size;
+  height: $plate-size;
+  opacity: 0;
+  border-radius: 50%;
+  box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.35);
+
+  @include transition(all 0.4s ease-in);
+
+  background-color: $FlatWetAsphalt;
+
+  i {
+    width: 100%;
+    font: {
+      size: 2em;
+    }
+    line-height: $plate-size + 3px;
+    text-align: center;
+    color: #333;
+  }
+
+  &:hover {
+    i {
+      color: #111;
+    }
+  }
+}
+
+$base: 0;
+
+@for $i from 1 through 8 {
+  .plate:nth-of-type(#{$i}) {
+    @include transition-delay(#{$base + s});
+  }
+  $base: $base + 0.1;
+}
+
+#check:checked ~ .main + .container {
+  .plate {
+    opacity: 1;
+  }
+
+  .plate:nth-of-type(1) {
+    top: 25px + 75px;
+    left: 25px + 50px;
+  }
+
+  .plate:nth-of-type(2) {
+    top: 25px + 75px;
+    left: -25px;
+  }
+}
+
+
+

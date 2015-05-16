@@ -1,0 +1,28 @@
+//
+   Created by anton on 5/14/2015.
+
+doctype
+html
+   head
+      title Template
+      link(rel="stylesheet",href="css/main.css")
+   body
+      section
+         .board
+            - for (var x = 0; x < 15; x++)
+               .boardRow
+                  - for (var y = 0; y < 15; y++)
+                     .boardCol
+                        .boardCell(id=x + "-" + y)
+         input(type="checkbox" id="check")
+         label.main(for="check")
+            .title
+               p New Game
+         .container
+            a.plate(href="#")
+               p X
+            a.plate(href="#")
+               p O
+
+      script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
+      script(src="js/bundle.js")
