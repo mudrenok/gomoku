@@ -11,7 +11,7 @@ var source     = require('vinyl-source-stream');
 var streamify  = require('gulp-streamify');
 //var gulpif     = require('gulp-if');
 
-var production = false; // true; false;
+var production = true; // true; false;
 var outDir = 'builds/development';
 var prodDir = 'builds/production';
 
@@ -19,6 +19,12 @@ gulp.task('jade', function(){
   return gulp.src('src/templates/**/*.jade')
     .pipe(jade())
     .pipe(gulp.dest(outDir))
+    .pipe(connect.reload());
+});
+gulp.task('jadeProd', function(){
+  return gulp.src('src/templates/**/*.jade')
+    .pipe(jade())
+    .pipe(gulp.dest(prodDir))
     .pipe(connect.reload());
 });
 
@@ -46,7 +52,7 @@ gulp.task('sass', function(){
 
 gulp.task('sassProd', function(){
   return gulp.src('src/sass/main.scss')
-    .pipe(sass({sourceComments: 'compressed'}))
+    .pipe(sass({outputStyle: 'compressed'}))
     .pipe(gulp.dest(prodDir + '/css'))
     .pipe(connect.reload());
 });
@@ -66,7 +72,7 @@ gulp.task('watch', function(){
 });
 
 var tasks = ['js', 'jade', 'sass', 'connectDev', 'watch'];
-var tasksProd = ['jsProd', 'sassProd'];
+var tasksProd = ['jsProd', 'sassProd', 'jadeProd'];
 if (production) tasks = tasks.concat(tasksProd);
 
 gulp.task('default', tasks);
