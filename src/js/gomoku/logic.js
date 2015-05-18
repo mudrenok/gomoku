@@ -1,7 +1,3 @@
-/**
- * Created by anton on 5/13/2015.
- */
-
 Array.matrix = function(m,n,initial) {
   var a, i, j, mat = [];
   for (i = 0; i < m; i++) {
@@ -16,17 +12,16 @@ Array.matrix = function(m,n,initial) {
 
 var initCombinations = require('./combinations');
 
-module.exports = function() {
-
-  var gameSize = 5;
-  var ring = 1;
+module.exports = function(player) {
+  var gameSize = 5; // 5 in line
+  var ring = 1; // ring size around current cells
   var win = false;
   var cellsCount = 15;
   var curState = Array.matrix(15, 15, 0);
   var complexity = 1;
-  var maxPlayer = -1;
+  var maxPlayer = player || -1; // X = 1, O = -1
   var combinations = initCombinations();
-  curState[7][7] = 1;
+  if (maxPlayer === -1) curState[7][7] = 1;
 
   var checkWin = function() {
     for (var i = 0; i < cellsCount; i++) {
@@ -38,7 +33,9 @@ module.exports = function() {
           getCombo(curState, curState[i][j], i, j, 1, 1),
           getCombo(curState, curState[i][j], i, j, 1, -1)
         );
-        if (playerVal == 1000000000) win = true;
+        if (playerVal === combinations.winValue) {
+          win = true;
+        }
       }
     }
   };
@@ -48,7 +45,7 @@ module.exports = function() {
     var alpha = Number.MIN_VALUE;
     var childs = getChilds(node, player);
     for (var i = 0; i < childs.length; i++) {
-      alpha = Math.max(alpha, -minimax(childs[i], depth - 1, -player, node)); // ?? mb need recursive
+      alpha = Math.max(alpha, -minimax(childs[i], depth - 1, -player, node));
     }
     return alpha;
   };
@@ -107,7 +104,6 @@ module.exports = function() {
       }
       combo.unshift(next1);
     }
-
     for (var k = 1; k < gameSize; k++) {
       var nextX = i + dx * k;
       var nextY = j + dy * k;
@@ -125,14 +121,6 @@ module.exports = function() {
   var heuristic = function(newNode, oldNode) {
     for (var i = 0; i < cellsCount; i++) {
       for (var j = 0; j < cellsCount; j++) {
-        //console.log(newNode);
-        //console.log(oldNode);
-        //console.log(i);
-        //console.log(j);
-        //console.log(oldNode[i][j]);
-        //console.log(newNode[i][j]);
-
-
         if (newNode[i][j] != oldNode[i][j]) {
           var curCell = newNode[i][j];
           var playerVal = combinations.valuePosition(
@@ -156,21 +144,25 @@ module.exports = function() {
     return 0;
   };
 
-
   var getLogic = {};
-
-  getLogic.makeAnswer = function(x,y) {
+  getLogic.winState = "";
+  getLogic.makeAnswer = function(x, y) {
+    var that = this;
     curState[x][y] = maxPlayer;
+    checkWin();
+    if (win){
+      that.winState = "you win";
+      return "";
+    }
     var answ = [-1, -1];
     var c = getChilds(curState, maxPlayer);
-    //console.log('getChilds->',c);
     var maxChild = -1;
     var maxValue = Number.MIN_VALUE;
     for (var k = 0; k < c.length; k++) {
       var curValue = miniMax(c[k], 0, -maxPlayer, curState);
       if (complexity > 1) {
-        //var curValue2 = this.miniMax(c[k], this.complexity - 1, -this.maxPlayer, this.curState);
-        //use it for more complex game
+        //var curValue2 = miniMax(c[k], complexity - 1, -maxPlayer, curState);
+        //use it for more complex game!
       }
       if (maxValue < curValue) {
         maxValue = curValue;
@@ -184,12 +176,14 @@ module.exports = function() {
           answ[1] = j;
           curState[answ[0]][answ[1]] = -maxPlayer;
           checkWin();
+          if (win){
+            that.winState = "you lost";
+          }
           return answ;
         }
       }
     }
     return answ;
   };
-
   return getLogic;
 };

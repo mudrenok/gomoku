@@ -1,7 +1,3 @@
-/**
- * Created by anton on 5/13/2015.
- */
-
 module.exports = function() {
   var win = [[1, 1, 1, 1, 1]];
   var unCovered4 = [[0, 1, 1, 1, 1, 0]];
@@ -24,7 +20,6 @@ module.exports = function() {
     [-1, 1, 1, 1, 0, 0], [-1, 1, 1, 0, 1, 0],
     [-1, 1, 0, 1, 1, 0], [0, 0, 1, 1, 1, -1],
     [0, 1, 0, 1, 1, -1], [0, 1, 1, 0, 1, -1],
-    // additional
     [-1, 1, 0, 1, 0, 1, -1], [-1, 0, 1, 1, 1, 0, -1],
     [-1, 1, 1, 0, 0, 1, -1], [-1, 1, 0, 0, 1, 1, -1]
   ];
@@ -88,16 +83,16 @@ module.exports = function() {
     return 0;
   };
 
-  var findArray = function(first, second){
-    var fCount = first.length;
-    var sCount = second.length;
+  var findArray = function(arr, inArr){
+    var fCount = arr.length;
+    var sCount = inArr.length;
     var k;
     for (var i = 0; i <= fCount - sCount; i++)
     {
       k = 0;
       for (var j = 0; j < sCount; j++)
       {
-        if (first[i + j] == second[j]) k++;
+        if (arr[i + j] == inArr[j]) k++;
         else break;
       }
       if (k == sCount) return true;
@@ -113,7 +108,8 @@ module.exports = function() {
   };
 
   var combinations = {};
-  combinations.valuePosition = function(arr1,  arr2,  arr3,  arr4){
+  combinations.winValue = 1000000000;
+  combinations.valuePosition = function(arr1,  arr2,  arr3,  arr4){ // 4 directions
     var w = 0, u2 = 0, u3 = 0, u4 = 0, c3 = 0, c4 = 0;
     var allArr = [arr1,  arr2,  arr3,  arr4];
     for (var i = 0; i < allArr.length; i++) {

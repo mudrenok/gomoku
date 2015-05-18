@@ -1,28 +1,29 @@
-/* line 23, stdin */
+/* line 8, stdin */
 body {
   margin: 0;
   padding: 0;
-  background-color: #2c3e50; }
+  background-color: #2c3e50;
+  min-width: 300px; }
 
-/* line 32, stdin */
+/* line 15, stdin */
+section {
+  margin-top: 10px; }
+
+/* line 19, stdin */
 .board {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
   margin: auto;
-  width: 600px;
-  height: 600px; }
+  margin-top: 10px;
+  width: 400px;
+  height: 400px; }
 
-/* line 39, stdin */
+/* line 26, stdin */
 .boardRow {
   width: 100%;
   height: 6.66667%;
   border-bottom: 1px solid #2c3e50;
   box-sizing: border-box; }
 
-/* line 46, stdin */
+/* line 33, stdin */
 .boardCol {
   width: 6.66667%;
   height: 100%;
@@ -32,7 +33,7 @@ body {
   border-left: 1px solid #2c3e50;
   box-sizing: border-box; }
 
-/* line 57, stdin */
+/* line 44, stdin */
 .boardCellCross {
   margin: auto;
   margin-top: 0.65%;
@@ -41,7 +42,7 @@ body {
   background-color: #2ecc71;
   transform: rotate(-45deg);
   border-radius: 1.5px; }
-  /* line 66, stdin */
+  /* line 53, stdin */
   .boardCellCross:before {
     background-color: inherit;
     border-radius: inherit;
@@ -51,7 +52,7 @@ body {
     content: "";
     transform: rotate(90deg); }
 
-/* line 77, stdin */
+/* line 64, stdin */
 .boardCellCircle {
   margin: 15%;
   width: 70%;
@@ -60,128 +61,109 @@ body {
   border-radius: 50%;
   box-sizing: border-box; }
 
-/* line 90, stdin */
+/* line 74, stdin */
+.controls {
+  width: 400px;
+  height: 26.66667px;
+  margin: auto; }
+
+/* line 80, stdin */
+.newGameCtrl, .sizeCtrl, .messages {
+  position: relative;
+  display: inline-block;
+  height: 100%;
+  width: 6.66667%; }
+
+/* line 87, stdin */
+.sizeCtrl, .messages {
+  float: right; }
+
+/* line 91, stdin */
+.messages {
+  width: 73.33333%;
+  z-index: 0; }
+
+/* line 96, stdin */
 #check {
   display: none; }
 
-/* line 95, stdin */
-.main,
-.container {
-  position: absolute;
-  top: 200px;
-  right: 0;
-  bottom: 0;
-  left: 50px;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%; }
-
-/* line 102, stdin */
-.main {
-  background-color: #B81365;
-  box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.35);
-  cursor: pointer;
-  z-index: 50; }
-  /* line 108, stdin */
-  .main:hover {
-    background-color: #cf1572; }
-  /* line 111, stdin */
-  .main:active {
-    box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.35), inset 1px 2px 2px rgba(0, 0, 0, 0.35);
-    background-color: #a11158; }
-  /* line 116, stdin */
-  .main .title {
-    font-size: 20px;
-    text-align: center;
-    color: white; }
-
-/* line 122, stdin */
-.container {
+/* line 100, stdin */
+.newContainer {
   z-index: 10; }
 
-/* line 126, stdin */
-.plate {
+/* line 104, stdin */
+.newMain, .sizeScale, .messagesContainer {
+  width: 100%;
+  height: 100%;
   position: absolute;
-  top: 25px;
-  left: 25px;
-  width: 50px;
-  height: 50px;
-  opacity: 0;
-  border-radius: 50%;
-  box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.35);
-  -webkit-transition: all 0.4s ease-in;
-  -moz-transition: all 0.4s ease-in;
-  transition: all 0.4s ease-in;
-  background-color: #34495e; }
-  /* line 142, stdin */
-  .plate i {
-    width: 100%;
-    font-size: 2em;
-    line-height: 53px;
-    text-align: center;
-    color: #333; }
-  /* line 153, stdin */
-  .plate:hover i {
-    color: #111; }
+  z-index: 50;
+  display: table;
+  text-align: center; }
 
-/* line 161, stdin */
-.plate:nth-of-type(1) {
+/* line 113, stdin */
+.newMain, .sizeScale {
+  cursor: pointer;
+  background-color: #2ecc71;
+  border-radius: 50%; }
+  /* line 117, stdin */
+  .newMain:hover, .sizeScale:hover {
+    background-color: #e74c3c; }
+
+/* line 122, stdin */
+.newMainText {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  color: #2c3e50;
+  display: table-cell;
+  vertical-align: middle; }
+
+/* line 131, stdin */
+.messagesContainer .newMainText {
+  color: #2ecc71; }
+
+/* line 134, stdin */
+.messagesContainer .looseState {
+  color: #e74c3c; }
+
+/* line 138, stdin */
+.newPlate {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 5; }
+  /* line 145, stdin */
+  .newPlate:hover {
+    background-color: #34495e; }
+
+/* line 151, stdin */
+.newPlate:nth-of-type(1) {
   -webkit-transition-delay: 0s;
   -moz-transition-delay: 0s;
   transition-delay: 0s; }
 
-/* line 161, stdin */
-.plate:nth-of-type(2) {
-  -webkit-transition-delay: 0.1s;
-  -moz-transition-delay: 0.1s;
-  transition-delay: 0.1s; }
-
-/* line 161, stdin */
-.plate:nth-of-type(3) {
-  -webkit-transition-delay: 0.2s;
-  -moz-transition-delay: 0.2s;
-  transition-delay: 0.2s; }
-
-/* line 161, stdin */
-.plate:nth-of-type(4) {
+/* line 151, stdin */
+.newPlate:nth-of-type(2) {
   -webkit-transition-delay: 0.3s;
   -moz-transition-delay: 0.3s;
   transition-delay: 0.3s; }
 
-/* line 161, stdin */
-.plate:nth-of-type(5) {
-  -webkit-transition-delay: 0.4s;
-  -moz-transition-delay: 0.4s;
-  transition-delay: 0.4s; }
-
-/* line 161, stdin */
-.plate:nth-of-type(6) {
-  -webkit-transition-delay: 0.5s;
-  -moz-transition-delay: 0.5s;
-  transition-delay: 0.5s; }
-
-/* line 161, stdin */
-.plate:nth-of-type(7) {
-  -webkit-transition-delay: 0.6s;
-  -moz-transition-delay: 0.6s;
-  transition-delay: 0.6s; }
-
-/* line 161, stdin */
-.plate:nth-of-type(8) {
-  -webkit-transition-delay: 0.7s;
-  -moz-transition-delay: 0.7s;
-  transition-delay: 0.7s; }
-
-/* line 169, stdin */
-#check:checked ~ .main + .container .plate {
+/* line 159, stdin */
+#check:checked ~ .newMain + .newContainer .newPlate {
   opacity: 1; }
 
-/* line 173, stdin */
-#check:checked ~ .main + .container .plate:nth-of-type(1) {
-  top: 100px;
-  left: 75px; }
+/* line 162, stdin */
+#check:checked ~ .newMain + .newContainer .newPlate:nth-of-type(1) {
+  left: 100%; }
 
-/* line 178, stdin */
-#check:checked ~ .main + .container .plate:nth-of-type(2) {
-  top: 100px;
-  left: -25px; }
+/* line 165, stdin */
+#check:checked ~ .newMain + .newContainer .newPlate:nth-of-type(2) {
+  left: 200%; }
