@@ -48,7 +48,7 @@ section {
   width: $boardElementWidth;
   height: $cellWidth;
   background-color: $FlatEmerald;
-  transform: rotate(-45deg);
+  @include transform(rotate(-45deg));
   border-radius: $boardElementWidth / 2;
   &:before {
     background-color: inherit;
@@ -57,7 +57,7 @@ section {
     width: inherit;
     position: absolute;
     content: "";
-    transform: rotate(90deg);
+    @include transform(rotate(90deg));
   }
 }
 

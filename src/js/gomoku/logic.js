@@ -176,7 +176,7 @@ module.exports = function(player) {
           answ[1] = j;
           curState[answ[0]][answ[1]] = -maxPlayer;
           checkWin();
-          if (win){
+          if (win) {
             that.winState = "you lost";
           }
           return answ;
